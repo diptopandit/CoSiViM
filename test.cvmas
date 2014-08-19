@@ -1,0 +1,8 @@
+add:
+	sub
+	ret
+main:
+	push 7
+	push 9
+	call @add, 2
+	halt 0
