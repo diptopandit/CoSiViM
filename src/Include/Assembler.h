@@ -17,9 +17,9 @@ void cosivm_print_version ();
 void cosivm_print_license ();
 void cosivm_print_warranty ();
 void cosivm_print_conditions ();
-long long cosivm_create_machine_code (cosivm_token*, long long **);
+long long cosivm_create_machine_code (cosivm_token*, long long **, long long*);
 void cosivm_run_assembler(char *);
-int cosivm_create_executable(char*, char*);
+long long cosivm_create_executable(char*, long long *, long long, long long*);
 void cosivm_cleanup_code(char*);
 
 #endif

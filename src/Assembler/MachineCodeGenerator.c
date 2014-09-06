@@ -3,8 +3,8 @@
 
 cosivm_reg cosivm_register (char *s) {
   assert(s != NULL);
-
-  for (int i = 0; i < COSIVM_NUM_REGS; i++)
+  int i;
+  for (i = 0; i < COSIVM_NUM_REGS; i++)
     if (!strcmp(cosivm_reverse_reg[i], s))
       return i;
 
@@ -13,8 +13,8 @@ cosivm_reg cosivm_register (char *s) {
 
 cosivm_instr cosivm_instruction (char *s) {
   assert(s != NULL);
-
-  for (int i = 0; i < COSIVM_NUM_INSTRS; i++)
+  int i;
+  for (i = 0; i < COSIVM_NUM_INSTRS; i++)
     if (!strcmp(cosivm_reverse_instr[i], s))
       return i;
 
@@ -22,7 +22,7 @@ cosivm_instr cosivm_instruction (char *s) {
 }
 
 
-long long cosivm_create_machine_code (cosivm_token *tokens, long long** machine_code) {
+long long cosivm_create_machine_code (cosivm_token *tokens, long long** machine_code, long long* main) {
   assert(tokens != NULL);
 
   long long length = -1;
@@ -103,8 +103,26 @@ long long cosivm_create_machine_code (cosivm_token *tokens, long long** machine_
     (*machine_code)[tmp->pos] = tmp->value;
     tmp = tmp->next;
   }
-
+  cosivm_hashtable *res = cosivm_hashtable_get(&labels, "main");
+  *main = res->value;
+  cosivm_hashtable_cleanup(&labels);
   return length;
 }
 
-
+long long cosivm_create_executable(char* fn, long long* machine_code, long long length, long long* main)
+{
+  //if(fn==NULL)
+	fn="./output.cvmex";
+  /*else
+  {
+	  //do nothing
+	}*/
+  long long res;
+  printf("DEBUG:: length= %lld\n", length);
+  FILE *fp = fopen(fn, "wb");
+  assert(fp != NULL);
+  res =  fwrite(machine_code, sizeof(long long), length,fp);
+  printf("DEBUG:: res= %lld\n", res);
+  fclose(fp);
+  return res;
+}

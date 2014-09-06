@@ -92,11 +92,13 @@ void cosivm_run_assembler (char *fn) {
     exit(1);
   }
   long long* machine_code;
-  long long res = cosivm_create_machine_code(tokens,&machine_code);
+  long long* main;
+  long long res = cosivm_create_machine_code(tokens,&machine_code, main);
+  long long length = res;
   printf("Machine code: \n");
-  while(res>=0)
-	  printf("%lld\n",machine_code[res--]);
-  //if(res) res = cosivm_create_executable(fn, machine_code);
+  /*while(res>=0)
+	  printf("%lld\n",machine_code[res--]);*/
+  if(res) res = cosivm_create_executable(fn, machine_code, length, main);
   cosivm_cleanup_tokens(tokens);
   //cosivm_cleanup_code(machine_code);
 }

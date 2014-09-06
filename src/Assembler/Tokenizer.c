@@ -101,8 +101,8 @@ int is_num (char *s) {
   assert(s != NULL);
 
   if (!(is_sign(s[0]) || isdigit(s[0]))) return 0;
-
-  for (int i = 1; i < strlen(s); i++)
+  int i;
+  for (i = 1; i < strlen(s); i++)
     if (!isdigit(s[i])) return 0;
 
   return 1;
@@ -134,7 +134,8 @@ char *is_var (char *s) {
 
 int is_instr (char *s) {
   assert(s != NULL);
-  for (int i = 0; i < COSIVM_NUM_INSTRS; i++)
+  int i;
+  for (i = 0; i < COSIVM_NUM_INSTRS; i++)
     if (!strcmp(cosivm_reverse_instr[i], s))
       return 1;
 

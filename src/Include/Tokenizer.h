@@ -25,9 +25,9 @@ typedef enum {
   Type(INSTR),
 } cosivm_token_type;
 
-static char cosivm_reverse_type[][6] = {
+/*static char cosivm_reverse_type[][6] = {
   "undef","num","reg","lbl","func","var","instr"
-};
+};*/
 
 typedef struct cosivm_tok_s {
   char token[COSIVM_TOKEN_LENGTH];
